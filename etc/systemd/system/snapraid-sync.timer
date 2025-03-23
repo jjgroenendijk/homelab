@@ -1,0 +1,10 @@
+[Unit]
+Description=Run SnapRAID sync daily
+
+[Timer]
+OnCalendar=daily
+AccuracySec=1hour
+Persistent=true
+
+[Install]
+WantedBy=timers.target

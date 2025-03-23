@@ -1,0 +1,10 @@
+[Unit]
+Description=SnapRAID Scrub
+After=local-fs.target
+
+[Service]
+Type=oneshot
+# Scrub 8% of the array, but not data that has been scrubbed in the last 10 days
+ExecStart=/usr/bin/snapraid scrub
+IOSchedulingClass=idle
+Nice=19

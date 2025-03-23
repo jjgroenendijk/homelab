@@ -1,0 +1,10 @@
+[Unit]
+Description=Automount for OverlayFS on /data
+# No explicit dependencies on individual drives
+
+[Automount]
+Where=/mnt/data
+TimeoutIdleSec=0
+
+[Install]
+WantedBy=multi-user.target

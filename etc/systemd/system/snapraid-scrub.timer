@@ -1,0 +1,10 @@
+[Unit]
+Description=Run SnapRAID scrub weekly
+
+[Timer]
+OnCalendar=weekly
+AccuracySec=1hour
+Persistent=true
+
+[Install]
+WantedBy=timers.target

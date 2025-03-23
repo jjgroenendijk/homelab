@@ -1,0 +1,12 @@
+[Unit]
+Description=Run SSD to HDD file mover daily
+After=multi-user.target
+
+[Timer]
+OnCalendar=*-*-* 02:00:00
+RandomizedDelaySec=1h
+Persistent=true
+AccuracySec=1h
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=SnapRAID Sync
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/snapraid sync
+IOSchedulingClass=idle
+Nice=19
