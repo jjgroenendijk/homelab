@@ -115,6 +115,55 @@ config branch
 config checkout -b new-config
 ```
 
+## Pushing to GitHub
+
+### 1. Add the Remote Repository
+
+```bash
+# Add GitHub as a remote
+config remote add origin git@github.com:username/repository.git
+```
+
+### 2. Configure SSH for Root User
+
+Since the `config` command uses `sudo`, you need to set up SSH keys for the root user:
+
+```bash
+# Create .ssh directory for root if it doesn't exist
+sudo mkdir -p /root/.ssh
+
+# Copy your SSH keys to root (adjust paths as needed)
+sudo cp /home/user/.ssh/github /root/.ssh/github
+sudo cp /home/user/.ssh/github.pub /root/.ssh/github.pub
+
+# Set proper permissions
+sudo chmod 600 /root/.ssh/github
+sudo chmod 644 /root/.ssh/github.pub
+
+# Create or update SSH config
+sudo tee /root/.ssh/config > /dev/null << 'EOF'
+Host github.com
+  IdentityFile /root/.ssh/github
+  User git
+EOF
+
+# Set proper permissions
+sudo chmod 600 /root/.ssh/config
+```
+
+### 3. Push to GitHub
+
+```bash
+# Check your current branch
+config branch
+
+# Push to GitHub (adjust branch names if needed)
+config push -u origin main
+
+# If you have branch name discrepancies (e.g., local main to remote master)
+config push -u origin main:master
+```
+
 ## Migrating to a New System
 
 ```bash
