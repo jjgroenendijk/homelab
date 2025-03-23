@@ -48,8 +48,9 @@ get_disk_usage_percent() {
 # Function to get available disk space in bytes
 get_disk_available_space() {
     local disk=$1
+    # df returns in KB, convert to bytes by multiplying by 1024
     local available=$(df --output=avail "$disk" | grep -v Avail | tr -d ' ')
-    echo "$available"
+    echo "$((available * 1024))"
 }
 
 # Function to find files older than X days
