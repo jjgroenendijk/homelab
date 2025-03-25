@@ -1,6 +1,7 @@
 [Unit]
 Description=SnapRAID Sync
 After=local-fs.target
+Conflicts=cache_mover.service
 
 [Service]
 Type=oneshot

@@ -1,0 +1,21 @@
+[Unit]
+Description=Move old files from SSD to HDD storage
+After=mnt-storage.mount
+Wants=snapraid-sync.service
+
+[Service]
+Type=oneshot
+# Move files older than 30 days from SSD to storage pool
+ExecStart=/usr/bin/rsync -av --remove-source-files --min-age=30 /mnt/cache/ /mnt/storage/
+# Clean up empty directories
+ExecStart=/usr/bin/find /mnt/cache -type d -empty -delete
+# Run snapraid sync after moving files
+ExecStopPost=/usr/bin/systemctl start snapraid-sync.service
+User=root
+Nice=19
+IOSchedulingClass=idle
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
