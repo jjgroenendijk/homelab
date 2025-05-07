@@ -97,17 +97,6 @@ services:
     depends_on:
       - wireguard
 
-  ddclient:
-    image: lscr.io/linuxserver/ddclient:latest
-    container_name: ddclient
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${CONFIG}/ddclient/config:/config
-    restart: unless-stopped
-
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
@@ -118,7 +107,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIG}/bazarr/config:/config
-      - ${DATA}/video:/video
+      - ${DATA}:/data
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -174,3 +163,27 @@ services:
 #    cap_add:
 #      - SYS_NICE
 #    restart: unless-stopped
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    hostname: overseerr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG}/overseerr/config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+
+  ddns:
+    image: ghcr.io/jjgroenendijk/ddns-updater-mijnhost:latest
+    container_name: ddns
+    hostname: ddns
+    restart: unless-stopped
+    environment:
+      - MIJNHOST_API_KEY=${MIJNHOST_API_KEY}
+    volumes:
+      - ${CONFIG}/ddns:/app/config
